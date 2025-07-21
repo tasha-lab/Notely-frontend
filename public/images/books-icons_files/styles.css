@@ -1,0 +1,4 @@
+body [id^=standard_iab] {
+    padding-bottom: unset !important;
+    margin: unset !important;
+}
