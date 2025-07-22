@@ -4,6 +4,8 @@ import Navbar from "../Components/Common/Navbar";
 import HeroSection from "../Components/HomeComponent/HeroSection";
 import Features from "../Components/HomeComponent/Features";
 import { useAuth } from "../Store/useAuth";
+import CTA from "../Components/HomeComponent/CTA";
+import Reviews from "../Components/HomeComponent/Reviews";
 
 const Homepage = () => {
   const { token } = useAuth();
@@ -16,6 +18,8 @@ const Homepage = () => {
           {token ? (
             <>
               <Features />
+              <CTA />
+              <Reviews />
             </>
           ) : (
             <></>

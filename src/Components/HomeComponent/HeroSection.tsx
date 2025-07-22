@@ -1,4 +1,4 @@
-import { ArrowRight } from "@mui/icons-material";
+import { ArrowRightAlt } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 
 const HeroSection = () => {
@@ -9,6 +9,9 @@ const HeroSection = () => {
           position: "relative",
           height: "32rem",
           overflow: "hidden",
+          mt: "3rem",
+          mb: "3rem",
+          borderRadius: ".6rem",
         }}
       >
         <Box
@@ -53,7 +56,7 @@ const HeroSection = () => {
           </Typography>
           <Button variant="contained" sx={{ mt: "2rem" }}>
             Get Started
-            <ArrowRight />
+            <ArrowRightAlt />
           </Button>
         </Box>
       </Box>

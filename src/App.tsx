@@ -4,6 +4,9 @@ import "./App.css";
 import SignupPage from "./Pages/SignupPage";
 import LoginPage from "./Pages/LoginPage";
 import { ToastContainer } from "react-toastify";
+import ProfilePage from "./Pages/ProfilePage";
+import AddNotesPage from "./Pages/AddNotesPage";
+import AllNotesPage from "./Pages/allNotesPage";
 
 const App = () => {
   return (
@@ -12,8 +15,11 @@ const App = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/my-notes" element={<AllNotesPage />} />
+        <Route path="/new-note" element={<AddNotesPage />} />
       </Routes>
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </>
   );
 };

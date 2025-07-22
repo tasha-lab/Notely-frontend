@@ -14,7 +14,7 @@ const Footer = () => {
       >
         <Container maxWidth="lg">
           <Typography variant="body2" color="text.primary" align="center">
-            © {new Date().getFullYear()} MySite. All rights reserved.
+            © {new Date().getFullYear()} Tasha. All rights reserved.
           </Typography>
         </Container>
       </Box>
