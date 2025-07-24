@@ -12,6 +12,10 @@ import { useAuth } from "../../Store/useAuth";
 
 const Navbar = () => {
   const { token } = useAuth();
+  const { user } = useAuth();
+
+  const initials =
+    `${user?.user?.firstname?.[0]}${user?.user?.lastname?.[0]}`.toUpperCase();
   return (
     <>
       <AppBar
@@ -49,22 +53,25 @@ const Navbar = () => {
                     Home
                   </Link>
                   <Link
-                    to="/profile/my-notes"
+                    to="/my-notes"
                     style={{
                       textDecoration: "none",
                       color: "#1a1a1a",
                       fontSize: "1.2rem",
                     }}
                   >
-                    My Notes
+                    Notes
                   </Link>
                 </Stack>
                 <Box>
-                  <Avatar>
-                    <Link to="/profile" style={{ textDecoration: "none" }}>
-                      T
-                    </Link>
-                  </Avatar>
+                  <Link to="/profile" style={{ textDecoration: "none" }}>
+                    <Avatar
+                      sx={{ color: "text.primary" }}
+                      src={user?.user?.avatar || undefined}
+                    >
+                      {!user?.user?.avatar && initials}
+                    </Avatar>
+                  </Link>
                 </Box>
               </>
             ) : (

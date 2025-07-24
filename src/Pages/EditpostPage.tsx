@@ -1,16 +1,16 @@
-import WritingNotes from "../Components/AddingNotes/WritingNotes";
+import EditPost from "../Components/EditNote/EditNote";
 import Navigations from "../Components/Common/navigations";
 import MiniDrawer from "../Components/Profile/Dashboard";
 
-const AddNotesPage = () => {
+const EditpostPage = () => {
   return (
-    <div>
+    <>
       <MiniDrawer>
         <Navigations />
-        <WritingNotes />
+        <EditPost />
       </MiniDrawer>
-    </div>
+    </>
   );
 };
 
-export default AddNotesPage;
+export default EditpostPage;

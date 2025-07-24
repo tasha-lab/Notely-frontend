@@ -29,7 +29,9 @@ import {
 } from "@mui/icons-material";
 import MuiAppBar from "@mui/material/AppBar";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../Store/useAuth";
+import { Avatar, Stack } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -128,10 +130,20 @@ const secondaryItems = [
   { text: "Log Out", icon: <Logout />, href: "/" },
   { text: "Account", icon: <Person />, href: "/account" },
 ];
+
 interface MinidrawerProps {
   children: React.ReactNode;
 }
 export default function MiniDrawer({ children }: MinidrawerProps) {
+  const { token, user, refreshUser } = useAuth();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!token) {
+      navigate("/");
+    }
+    refreshUser();
+  }, [token, navigate]);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -143,6 +155,9 @@ export default function MiniDrawer({ children }: MinidrawerProps) {
     setOpen(false);
   };
 
+  const initials =
+    `${user?.user?.firstname?.[0]}${user?.user?.lastname?.[0]}`.toUpperCase();
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -153,18 +168,43 @@ export default function MiniDrawer({ children }: MinidrawerProps) {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={[
-              {
-                marginRight: 5,
-              },
-              open && { display: "none" },
-            ]}
+            sx={[{ marginRight: 5 }, open && { display: "none" }]}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Notely
-          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
+            <Stack spacing={4} direction={"row"}>
+              <Link
+                to="/"
+                style={{
+                  textDecoration: "none",
+                  color: "#1a1a1a",
+                  fontSize: "1.2rem",
+                  fontFamily: `"Roboto", sans-serif`,
+                }}
+              >
+                Home
+              </Link>
+              <Link
+                to="/my-notes"
+                style={{
+                  textDecoration: "none",
+                  color: "#1a1a1a",
+                  fontSize: "1.2rem",
+                  fontFamily: `"Roboto", sans-serif`,
+                }}
+              >
+                Notes
+              </Link>
+            </Stack>
+          </Box>
+          <Avatar
+            sx={{ width: 40, height: 40, color: "#000" }}
+            src={user?.user?.avatar || undefined}
+          >
+            {!user?.user?.avatar && initials}
+          </Avatar>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

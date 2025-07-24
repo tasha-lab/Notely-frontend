@@ -7,36 +7,46 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { Add } from "@mui/icons-material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Api from "../../Api/Axios";
 import { toast } from "react-toastify";
 
-interface NotesData {
+interface Notes {
   title: string;
   synopsis: string;
   content: string;
 }
 
-const WritingNotes = () => {
+const EditPost = () => {
   const [title, setTitle] = useState("");
   const [synopsis, setSynopsis] = useState("");
   const [content, setContent] = useState("");
-  const navigate = useNavigate();
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const editNote = location.state?.note;
+
+  useEffect(() => {
+    if (editNote) {
+      setTitle(editNote.title);
+      setSynopsis(editNote.synopsis);
+      setContent(editNote.content);
+    }
+  }, [editNote]);
   const { isPending, mutate } = useMutation({
-    mutationKey: ["creatingNotes"],
-    mutationFn: async (noteData: NotesData) => {
-      const response = await Api.post("/entries", noteData);
+    mutationKey: ["editANote"],
+    mutationFn: async (editedNote: Notes) => {
+      const response = await Api.patch(`/entries/editNote/${id}`, editedNote);
       return response.data;
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message);
     },
     onSuccess: (data) => {
-      toast.success(data.message);
+      console.log(data.message);
       setTitle("");
       setSynopsis("");
       setContent("");
@@ -44,15 +54,11 @@ const WritingNotes = () => {
     },
   });
 
-  const handleAddingNotes = () => {
-    const noteData: NotesData = {
-      title,
-      synopsis,
-      content,
-    };
-
-    mutate(noteData);
+  const handleEditingNotes = () => {
+    const note = { title, synopsis, content };
+    mutate(note);
   };
+
   return (
     <>
       <Box
@@ -104,9 +110,9 @@ const WritingNotes = () => {
               Synopsis
             </FormLabel>
             <TextField
-              label="synopsis"
               value={synopsis}
               onChange={(e) => setSynopsis(e.target.value)}
+              label="synopsis"
               sx={{
                 overflow: "hidden",
                 width: "100%",
@@ -141,10 +147,10 @@ const WritingNotes = () => {
               Notes
             </FormLabel>
             <TextField
-              multiline
-              minRows={20}
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              multiline
+              minRows={20}
               sx={{
                 width: "100%",
                 textArea: {
@@ -158,13 +164,12 @@ const WritingNotes = () => {
         </Grid>
         <Stack my={"2rem"} direction={"row"} justifyContent={"right"}>
           <Button
+            onClick={handleEditingNotes}
+            loading={isPending}
             sx={{ width: "7rem" }}
             variant="contained"
-            loading={isPending}
-            onClick={handleAddingNotes}
           >
-            Add
-            <Add />
+            Edit
           </Button>
         </Stack>
       </Box>
@@ -172,4 +177,4 @@ const WritingNotes = () => {
   );
 };
 
-export default WritingNotes;
+export default EditPost;

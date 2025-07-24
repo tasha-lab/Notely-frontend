@@ -7,10 +7,11 @@ interface AuthState {
   user: any;
   login: (identifier: string, password: string) => Promise<{ message: string }>;
   logout: () => void;
+  refreshUser: () => Promise<void>;
 }
 export const useAuth = create<AuthState>()(
   persist(
-    (set, _get) => ({
+    (set, get) => ({
       token: null,
       user: null,
       login: async (identifier, password) => {
@@ -36,6 +37,16 @@ export const useAuth = create<AuthState>()(
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         set({ token: null, user: null });
+      },
+      refreshUser: async () => {
+        try {
+          const { token } = get();
+          if (token) {
+            const response = await Api.get("/auth/userdetails");
+            set({ user: response.data });
+            localStorage.setItem("user", JSON.stringify(response.data));
+          }
+        } catch (error) {}
       },
     }),
     {
