@@ -1,11 +1,13 @@
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import MiniDrawer from "../Components/Profile/Dashboard";
 import ViewIndividualNotes from "../Components/Profile/ViewIndividualNotes";
-import Navigations from "../Components/Common/navigations";
 import { useQuery } from "@tanstack/react-query";
 import Api from "../Api/Axios";
 import { PropagateLoader } from "react-spinners";
 import ProfileImage from "../Components/Profile/ProfileImage";
+import { KeyboardDoubleArrowLeft } from "@mui/icons-material";
+import { Box, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface Note {
   id: string;
@@ -14,10 +16,15 @@ interface Note {
   content: string;
   dateCreated: string;
   lastUpdated: string;
+  isDeleted: string;
 }
 
 const ProfilePage = () => {
-  const { data: notes = [], isLoading } = useQuery<Note[]>({
+  const {
+    data: notes = [],
+    isLoading,
+    refetch,
+  } = useQuery<Note[]>({
     queryKey: ["gettingAllNotes"],
     queryFn: async () => {
       const response = await Api.get("/entries/user/entries");
@@ -42,7 +49,25 @@ const ProfilePage = () => {
   return (
     <>
       <MiniDrawer>
-        <Navigations />
+        <Box
+          mt={"5rem"}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Stack
+              direction={"row"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              sx={{ textDecoration: "none", color: "text.primary" }}
+            >
+              <KeyboardDoubleArrowLeft fontSize="small" />
+              <Typography variant="body1">Back to home</Typography>
+            </Stack>
+          </Link>
+        </Box>
         <ProfileImage />
         <Grid
           style={{ marginTop: "3rem" }}
@@ -52,7 +77,12 @@ const ProfilePage = () => {
           gap={"1rem"}
         >
           {notes.map((notes: Note, index: number) => (
-            <ViewIndividualNotes key={notes.id} delay={index} notes={notes} />
+            <ViewIndividualNotes
+              key={notes.id}
+              refetch={refetch}
+              delay={index}
+              notes={notes}
+            />
           ))}
         </Grid>
       </MiniDrawer>

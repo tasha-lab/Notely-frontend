@@ -6,6 +6,7 @@ import {
   Container,
   Stack,
   Toolbar,
+  Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Store/useAuth";
@@ -71,6 +72,13 @@ const Navbar = () => {
                     >
                       {!user?.user?.avatar && initials}
                     </Avatar>
+                    <Typography
+                      variant="subtitle1"
+                      color="text.primary"
+                      fontSize={".7rem"}
+                    >
+                      Profile
+                    </Typography>
                   </Link>
                 </Box>
               </>

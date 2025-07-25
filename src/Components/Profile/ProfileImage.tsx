@@ -43,7 +43,7 @@ const ProfileImage = () => {
   };
 
   return (
-    <Box width="100%" mt="2rem">
+    <Box width="100%" mt="1rem">
       <Stack
         direction="column"
         alignItems="center"

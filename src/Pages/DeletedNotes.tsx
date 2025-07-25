@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import AllNotes from "../Components/AllNotes/allNotes";
 import MiniDrawer from "../Components/Profile/Dashboard";
+import DeleteNotesUI from "../Components/Profile/DeletedNotes";
+import { useQuery } from "@tanstack/react-query";
 import Api from "../Api/Axios";
-import { Grid } from "@mui/material";
 import { PropagateLoader } from "react-spinners";
+import { Grid } from "@mui/material";
 import { Box } from "@mui/material";
 import Navigations from "../Components/Common/Navigations";
 
@@ -14,13 +14,18 @@ interface Note {
   content: string;
   dateCreated: string;
   lastUpdated: string;
+  isDeleted: string;
 }
 
-const AllNotesPage = () => {
-  const { data: notes = [], isLoading } = useQuery<Note[]>({
-    queryKey: ["gettingAllNotes"],
+const DeletedNotes = () => {
+  const {
+    data: notes = [],
+    isLoading,
+    refetch,
+  } = useQuery<Note[]>({
+    queryKey: ["gettingDeletedNotes"],
     queryFn: async () => {
-      const response = await Api.get("/entries");
+      const response = await Api.get("/entries/trash");
       return response.data.data;
     },
   });
@@ -44,13 +49,19 @@ const AllNotesPage = () => {
       <MiniDrawer>
         <Navigations />
         <Grid
+          style={{ marginTop: "1rem" }}
           display={"flex"}
           justifyContent={"center"}
           flexWrap={"wrap"}
           gap={"1rem"}
         >
           {notes.map((notes: Note, index: number) => (
-            <AllNotes key={notes.id} delay={index} notes={notes} />
+            <DeleteNotesUI
+              key={notes.id}
+              delay={index}
+              refetch={refetch}
+              notes={notes}
+            />
           ))}
         </Grid>
       </MiniDrawer>
@@ -58,4 +69,4 @@ const AllNotesPage = () => {
   );
 };
 
-export default AllNotesPage;
+export default DeletedNotes;

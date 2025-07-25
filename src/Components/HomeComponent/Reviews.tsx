@@ -50,7 +50,10 @@ const Reviews = () => {
           </Box>
           <Box sx={{ display: "flex" }} width={"16rem"}>
             <Paper sx={{ display: "flex", p: 1 }}>
-              <Avatar sx={{ marginTop: "2rem" }}>KT</Avatar>
+              <Avatar
+                sx={{ marginTop: "2rem" }}
+                src="/images/user4.jpg"
+              ></Avatar>
               <Box sx={{ paddingLeft: "1.5rem" }}>
                 <Typography variant="subtitle1">Kevin Thompson</Typography>
                 <Typography>
@@ -63,7 +66,10 @@ const Reviews = () => {
           </Box>
           <Box sx={{ display: "flex" }} width={"16rem"}>
             <Paper sx={{ display: "flex", p: 1 }}>
-              <Avatar sx={{ marginTop: "2rem" }}>AR</Avatar>
+              <Avatar
+                sx={{ marginTop: "2rem" }}
+                src="/images/user2.jpg"
+              ></Avatar>
               <Box sx={{ paddingLeft: "1.5rem" }}>
                 <Typography variant="subtitle1">Amina Rahim</Typography>
                 <Typography>
@@ -75,7 +81,10 @@ const Reviews = () => {
           </Box>
           <Box sx={{ display: "flex" }} width={"16rem"}>
             <Paper sx={{ display: "flex", p: 1 }}>
-              <Avatar sx={{ marginTop: "2rem" }}>MO</Avatar>
+              <Avatar
+                sx={{ marginTop: "2rem" }}
+                src="/images/user5.jpg"
+              ></Avatar>
               <Box sx={{ paddingLeft: "1.5rem" }}>
                 <Typography variant="subtitle1">Michael Owino</Typography>
                 <Typography>
@@ -87,7 +96,10 @@ const Reviews = () => {
           </Box>
           <Box sx={{ display: "flex" }} width={"16rem"}>
             <Paper sx={{ display: "flex", p: 1 }}>
-              <Avatar sx={{ marginTop: "2rem" }}>LC</Avatar>
+              <Avatar
+                sx={{ marginTop: "2rem" }}
+                src="/images/user3.jpg"
+              ></Avatar>
               <Box sx={{ paddingLeft: "1.5rem" }}>
                 <Typography variant="subtitle1">Laura Chen</Typography>
                 <Typography>

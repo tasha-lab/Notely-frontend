@@ -4,7 +4,6 @@ import MuiDrawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -29,7 +28,7 @@ import {
 } from "@mui/icons-material";
 import MuiAppBar from "@mui/material/AppBar";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Store/useAuth";
 import { Avatar, Stack } from "@mui/material";
 
@@ -126,16 +125,11 @@ const mainItems = [
   { text: "Trash", icon: <Delete />, href: "/deleted-notes" },
 ];
 
-const secondaryItems = [
-  { text: "Log Out", icon: <Logout />, href: "/" },
-  { text: "Account", icon: <Person />, href: "/account" },
-];
-
 interface MinidrawerProps {
   children: React.ReactNode;
 }
 export default function MiniDrawer({ children }: MinidrawerProps) {
-  const { token, user, refreshUser } = useAuth();
+  const { token, user, refreshUser, logout } = useAuth();
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -145,6 +139,7 @@ export default function MiniDrawer({ children }: MinidrawerProps) {
     refreshUser();
   }, [token, navigate]);
   const theme = useTheme();
+  const location = useLocation();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -154,6 +149,18 @@ export default function MiniDrawer({ children }: MinidrawerProps) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const handleLogOut = () => {
+    logout();
+    navigate("/");
+  };
+  const secondaryItems = [
+    {
+      text: "Log Out",
+      icon: <Logout />,
+      onClick: handleLogOut,
+    },
+    { text: "Account", icon: <Person />, href: "/account" },
+  ];
 
   const initials =
     `${user?.user?.firstname?.[0]}${user?.user?.lastname?.[0]}`.toUpperCase();
@@ -199,12 +206,18 @@ export default function MiniDrawer({ children }: MinidrawerProps) {
               </Link>
             </Stack>
           </Box>
-          <Avatar
-            sx={{ width: 40, height: 40, color: "#000" }}
-            src={user?.user?.avatar || undefined}
-          >
-            {!user?.user?.avatar && initials}
-          </Avatar>
+          <Link to="/profile" style={{ textDecoration: "none" }}>
+            <Avatar
+              sx={{
+                width: 40,
+                height: 40,
+                color: "#000",
+              }}
+              src={user?.user?.avatar || undefined}
+            >
+              {!user?.user?.avatar && initials}
+            </Avatar>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -219,70 +232,84 @@ export default function MiniDrawer({ children }: MinidrawerProps) {
         </DrawerHeader>
         <Divider />
         <List>
-          {mainItems.map(({ text, icon, href }) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                component={Link as any}
-                to={href}
-                sx={[
-                  { minHeight: 48, px: 2.5 },
-                  open
-                    ? { justifyContent: "initial" }
-                    : { justifyContent: "center" },
-                ]}
-              >
-                <ListItemIcon
+          {mainItems.map(({ text, icon, href }) => {
+            const isActive = location.pathname === href;
+            return (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  component={Link as any}
+                  to={href}
                   sx={[
-                    { minWidth: 0, justifyContent: "center" },
-                    open ? { mr: 3 } : { mr: "auto" },
+                    {
+                      minHeight: 48,
+                      px: 2.5,
+                      backgroundColor: isActive ? "#b08968" : "transparent",
+                    },
+                    open
+                      ? { justifyContent: "initial" }
+                      : { justifyContent: "center" },
                   ]}
                 >
-                  {icon}
-                </ListItemIcon>
+                  <ListItemIcon
+                    sx={[
+                      { minWidth: 0, justifyContent: "center" },
+                      open ? { mr: 3 } : { mr: "auto" },
+                    ]}
+                  >
+                    {icon}
+                  </ListItemIcon>
 
-                <ListItemText
-                  primary={text}
-                  sx={[open ? { opacity: 1 } : { opacity: 0 }]}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                  <ListItemText
+                    primary={text}
+                    sx={[open ? { opacity: 1 } : { opacity: 0 }]}
+                  />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
         </List>
 
         <Divider />
 
         <List>
-          {secondaryItems.map(({ text, icon, href }) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                component={Link as any}
-                to={href}
-                sx={[
-                  { minHeight: 48, px: 2.5 },
-                  open
-                    ? { justifyContent: "initial" }
-                    : { justifyContent: "center" },
-                ]}
-              >
-                <ListItemIcon
+          {secondaryItems.map(({ text, icon, href, onClick }) => {
+            const isActive = location.pathname === href;
+            return (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  component={href ? (Link as any) : "button"}
+                  onClick={onClick}
+                  to={href}
                   sx={[
-                    { minWidth: 0, justifyContent: "center" },
-                    open ? { mr: 3 } : { mr: "auto" },
+                    {
+                      minHeight: 48,
+                      px: 2.5,
+                      backgroundColor: isActive ? "#b08968" : "transparent",
+                    },
+                    open
+                      ? { justifyContent: "initial" }
+                      : { justifyContent: "center" },
                   ]}
                 >
-                  {icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  sx={[open ? { opacity: 1 } : { opacity: 0 }]}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
+                  <ListItemIcon
+                    sx={[
+                      { minWidth: 0, justifyContent: "center" },
+                      open ? { mr: 3 } : { mr: "auto" },
+                    ]}
+                  >
+                    {icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={text}
+                    sx={[open ? { opacity: 1 } : { opacity: 0 }]}
+                  />
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* <DrawerHeader /> */}
         {children}
       </Box>
     </Box>

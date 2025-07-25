@@ -3,6 +3,7 @@ import {
   Button,
   Divider,
   Grid,
+  Paper,
   Stack,
   TextField,
   Typography,
@@ -53,9 +54,14 @@ const Signup = () => {
 
   return (
     <>
-      <Box>
+      <Box bgcolor={"background.default"}>
         <Grid container p={"3rem"} justifyContent={"center"}>
-          <Grid border={"1px solid black"} width={"25rem"}>
+          <Paper
+            sx={{
+              width: "30rem",
+              p: "2rem",
+            }}
+          >
             <Stack spacing={3} p={"2rem"}>
               <Stack
                 direction={"row"}
@@ -121,7 +127,7 @@ const Signup = () => {
                 Already have an account <Link to={"/login"}>Login</Link>
               </Typography>
             </Stack>
-          </Grid>
+          </Paper>
         </Grid>
       </Box>
     </>

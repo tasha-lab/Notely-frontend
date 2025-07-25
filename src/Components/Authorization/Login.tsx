@@ -8,6 +8,7 @@ import {
   Stack,
   TextField,
   Typography,
+  Paper,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
@@ -49,9 +50,14 @@ const Login = () => {
 
   return (
     <>
-      <Box sx={{ height: "100vh" }}>
+      <Box sx={{ height: "100vh" }} bgcolor={"background.default"}>
         <Grid container p={"3rem"} justifyContent={"center"}>
-          <Grid border={"1px solid black"} width={"25rem"} p={"2rem"}>
+          <Paper
+            sx={{
+              width: "25rem",
+              p: "2rem",
+            }}
+          >
             <Stack
               direction={"row"}
               pb={"1rem"}
@@ -90,7 +96,7 @@ const Login = () => {
                 Don't have an account <Link to={"/signup"}>Sign up</Link>
               </Typography>
             </Stack>
-          </Grid>
+          </Paper>
         </Grid>
       </Box>
     </>

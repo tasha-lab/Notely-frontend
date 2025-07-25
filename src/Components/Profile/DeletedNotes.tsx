@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Api from "../../Api/Axios";
 import { toast } from "react-toastify";
@@ -31,11 +31,12 @@ interface NotesProp {
   delay?: number;
   refetch: () => void;
 }
-const ViewIndividualNotes = ({ notes, refetch }: NotesProp) => {
+
+const DeletedNotesUI = ({ notes, refetch }: NotesProp) => {
   const { mutate } = useMutation({
-    mutationKey: ["DeleteANote"],
+    mutationKey: ["RestoreDeletedNote"],
     mutationFn: async (id: string) => {
-      const response = await Api.delete(`/entries/${id}`);
+      const response = await Api.patch(`/entries/restore/${id}`);
       return response.data;
     },
     onError: (error: any) => {
@@ -47,7 +48,7 @@ const ViewIndividualNotes = ({ notes, refetch }: NotesProp) => {
     },
   });
 
-  const handleDeletingNote = (id: string) => {
+  const handleRestoringANote = (id: string) => {
     mutate(id);
   };
 
@@ -61,7 +62,7 @@ const ViewIndividualNotes = ({ notes, refetch }: NotesProp) => {
   };
   return (
     <>
-      <Box width={"16rem"}>
+      <Box width={"16rem"} mt={"2rem"}>
         <Grid container width={"100%"}>
           <Card
             sx={{
@@ -86,17 +87,9 @@ const ViewIndividualNotes = ({ notes, refetch }: NotesProp) => {
                     open={Boolean(menu)}
                     onClose={handleOnClose}
                   >
-                    <MenuItem
-                      component={Link}
-                      to={`/edit-a-post/${notes.id}`}
-                      state={{ note: notes }}
-                    >
-                      Edit
+                    <MenuItem onClick={() => handleRestoringANote(notes.id)}>
+                      Restore Note
                     </MenuItem>
-                    <MenuItem onClick={() => handleDeletingNote(notes.id)}>
-                      Delete
-                    </MenuItem>
-                    {/* <MenuItem>Pin</MenuItem> */}
                   </Menu>
                 </Stack>
               </Box>
@@ -109,8 +102,7 @@ const ViewIndividualNotes = ({ notes, refetch }: NotesProp) => {
                   {notes.title}
                 </Typography>
                 <Typography variant="body1" mb={".9rem"}>
-                  {notes.synopsis.split(" ").slice(0, 20).join(" ")}
-                  {notes.synopsis.split(" ").length > 20 && "..."}
+                  {notes.synopsis}
                 </Typography>
               </Stack>
               <Stack direction={"row"} justifyContent={"right"}>
@@ -136,4 +128,4 @@ const ViewIndividualNotes = ({ notes, refetch }: NotesProp) => {
   );
 };
 
-export default ViewIndividualNotes;
+export default DeletedNotesUI;
