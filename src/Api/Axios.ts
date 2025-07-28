@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Api = axios.create({
-  baseURL: "http://localhost:2345/api",
+  baseURL: "https://notely-fullstack.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
