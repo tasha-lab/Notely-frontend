@@ -19,7 +19,9 @@ const HeroSection = () => {
             position: "absolute",
             width: "100%",
             height: "100%",
-            backgroundImage: "/images/hero-img.avif",
+            backgroundImage:
+              "url('https://ik.imagekit.io/i41ltmdfl/user/hero-img.avif?updatedAt=1753702144146')",
+
             backgroundSize: "cover",
             backgroundPosition: "center",
             zIndex: 1,
