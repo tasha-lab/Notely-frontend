@@ -2,10 +2,11 @@ import {
   KeyboardDoubleArrowLeft,
   KeyboardDoubleArrowRight,
 } from "@mui/icons-material";
-import { Box, Stack, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navigations = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Box
@@ -15,7 +16,11 @@ const Navigations = () => {
           justifyContent: "space-between",
         }}
       >
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Button
+          variant="outlined"
+          onClick={() => navigate(-1)}
+          style={{ textDecoration: "none" }}
+        >
           <Stack
             direction={"row"}
             alignItems={"center"}
@@ -25,7 +30,7 @@ const Navigations = () => {
             <KeyboardDoubleArrowLeft fontSize="small" />
             <Typography variant="body1">Back to home</Typography>
           </Stack>
-        </Link>
+        </Button>
         <Link to="/profile" style={{ textDecoration: "none" }}>
           <Stack
             direction={"row"}
