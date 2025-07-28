@@ -1,4 +1,4 @@
-import { MoreHoriz } from "@mui/icons-material";
+import { MoreHoriz, PushPin } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -23,7 +23,9 @@ interface Note {
   content: string;
   dateCreated: string;
   lastUpdated: string;
-  isDeleted: string;
+  isDeleted: boolean;
+  isPrivate: boolean;
+  isPinned: boolean;
 }
 
 interface NotesProp {
@@ -46,9 +48,44 @@ const ViewIndividualNotes = ({ notes, refetch }: NotesProp) => {
       refetch();
     },
   });
-
   const handleDeletingNote = (id: string) => {
     mutate(id);
+  };
+
+  const { mutate: pinnote } = useMutation({
+    mutationKey: ["pinaNote"],
+    mutationFn: async (id: string) => {
+      const response = await Api.patch(`/entries/pinned/${id}`);
+      return response.data;
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message);
+    },
+    onSuccess: (data) => {
+      toast.success(data?.message);
+      refetch();
+    },
+  });
+  const handlePinningNotes = (id: string) => {
+    pinnote(id);
+  };
+
+  const { mutate: noteStatus } = useMutation({
+    mutationKey: ["SetNoteStatus"],
+    mutationFn: async (id: string) => {
+      const response = await Api.patch(`/entries/private/${id}`);
+      return response.data;
+    },
+    onError: (error: any) => {
+      toast.error(error.response?.data?.message);
+    },
+    onSuccess: (data) => {
+      toast.success(data?.message);
+      refetch();
+    },
+  });
+  const handleNoteStatus = (id: string) => {
+    noteStatus(id);
   };
 
   const [menu, setMenu] = useState<null | HTMLElement>(null);
@@ -75,7 +112,22 @@ const ViewIndividualNotes = ({ notes, refetch }: NotesProp) => {
           >
             <CardContent sx={{ width: "100%" }}>
               <Box>
-                <Stack direction={"row"} justifyContent={"right"}>
+                <Stack direction={"row"} justifyContent={"space-between"}>
+                  <Typography
+                    sx={{
+                      bgcolor: notes.isPrivate ? "#fddede" : "#d0f0c0",
+                      width: "4rem",
+                      display: "flex",
+                      justifyContent: "center",
+                      borderRadius: ".6rem",
+                      height: "1.2rem",
+                    }}
+                  >
+                    {notes.isPrivate ? "Private" : "public"}
+                  </Typography>
+                  <Typography>
+                    {notes.isPinned ? <PushPin fontSize="small" /> : ""}
+                  </Typography>
                   <Button onClick={HandleMenuButton} sx={{ width: "4rem" }}>
                     <MoreHoriz />
                   </Button>
@@ -93,10 +145,18 @@ const ViewIndividualNotes = ({ notes, refetch }: NotesProp) => {
                     >
                       Edit
                     </MenuItem>
-                    <MenuItem onClick={() => handleDeletingNote(notes.id)}>
+                    <MenuItem onClick={() => handlePinningNotes(notes.id)}>
+                      {notes.isPinned ? "unpin" : "pin"}
+                    </MenuItem>
+                    <MenuItem onClick={() => handleNoteStatus(notes.id)}>
+                      {notes.isPrivate ? "Public" : "Private"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => handleDeletingNote(notes.id)}
+                      sx={{ bgcolor: "#fddede" }}
+                    >
                       Delete
                     </MenuItem>
-                    {/* <MenuItem>Pin</MenuItem> */}
                   </Menu>
                 </Stack>
               </Box>

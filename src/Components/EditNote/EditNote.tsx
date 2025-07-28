@@ -46,7 +46,7 @@ const EditPost = () => {
       toast.error(error.response?.data?.message);
     },
     onSuccess: (data) => {
-      console.log(data.message);
+      toast.success(data.message);
       setTitle("");
       setSynopsis("");
       setContent("");

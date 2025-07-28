@@ -11,10 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import Api from "../../Api/Axios";
 import { toast } from "react-toastify";
+import Api from "../../Api/Axios";
 
 interface Note {
   id: string;
@@ -24,6 +24,7 @@ interface Note {
   dateCreated: string;
   lastUpdated: string;
   isDeleted: string;
+  isPrivate: boolean;
 }
 
 interface NotesProp {
@@ -32,11 +33,11 @@ interface NotesProp {
   refetch: () => void;
 }
 
-const DeletedNotesUI = ({ notes, refetch }: NotesProp) => {
-  const { mutate } = useMutation({
-    mutationKey: ["RestoreDeletedNote"],
+const PrivateNotes = ({ notes, refetch }: NotesProp) => {
+  const { mutate: noteStatus } = useMutation({
+    mutationKey: ["SetNoteStatus"],
     mutationFn: async (id: string) => {
-      const response = await Api.patch(`/entries/restore/${id}`);
+      const response = await Api.patch(`/entries/private/${id}`);
       return response.data;
     },
     onError: (error: any) => {
@@ -47,11 +48,9 @@ const DeletedNotesUI = ({ notes, refetch }: NotesProp) => {
       refetch();
     },
   });
-
-  const handleRestoringANote = (id: string) => {
-    mutate(id);
+  const handleNoteStatus = (id: string) => {
+    noteStatus(id);
   };
-
   const [menu, setMenu] = useState<null | HTMLElement>(null);
 
   const HandleMenuButton = (e: React.MouseEvent<HTMLElement>) => {
@@ -87,8 +86,15 @@ const DeletedNotesUI = ({ notes, refetch }: NotesProp) => {
                     open={Boolean(menu)}
                     onClose={handleOnClose}
                   >
-                    <MenuItem onClick={() => handleRestoringANote(notes.id)}>
-                      Restore Note
+                    <MenuItem
+                      component={Link}
+                      to={`/edit-a-post/${notes.id}`}
+                      state={{ note: notes }}
+                    >
+                      Edit
+                    </MenuItem>
+                    <MenuItem onClick={() => handleNoteStatus(notes.id)}>
+                      {notes.isPrivate ? "Public" : "Private"}
                     </MenuItem>
                   </Menu>
                 </Stack>
@@ -101,9 +107,8 @@ const DeletedNotesUI = ({ notes, refetch }: NotesProp) => {
                 >
                   {notes.title}
                 </Typography>
-                <Typography variant="body1" mb={".9rem"}>
-                  {notes.synopsis.split(" ").slice(0, 20).join(" ")}
-                  {notes.synopsis.split(" ").length > 20 && "..."}
+                <Typography variant="body1" mb={".9rem"} overflow={"hidden"}>
+                  {notes.synopsis}{" "}
                 </Typography>
               </Stack>
               <Stack direction={"row"} justifyContent={"right"}>
@@ -114,7 +119,6 @@ const DeletedNotesUI = ({ notes, refetch }: NotesProp) => {
                     bottom: ".5rem",
                     width: "5rem",
                   }}
-                  variant="contained"
                   component={Link}
                   to={`/note/${notes.id}`}
                 >
@@ -129,4 +133,4 @@ const DeletedNotesUI = ({ notes, refetch }: NotesProp) => {
   );
 };
 
-export default DeletedNotesUI;
+export default PrivateNotes;

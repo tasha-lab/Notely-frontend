@@ -1,13 +1,11 @@
-import MiniDrawer from "../Components/Profile/Dashboard";
-import DeleteNotesUI from "../Components/Profile/DeletedNotes";
-import { useQuery } from "@tanstack/react-query";
-import Api from "../Api/Axios";
-import { PropagateLoader } from "react-spinners";
-import { Grid, Typography } from "@mui/material";
-import { Box } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import Navigations from "../Components/Common/Navigations";
-import { DeleteOutline } from "@mui/icons-material";
-
+import MiniDrawer from "../Components/Profile/Dashboard";
+import PinnedNotes from "../Components/Profile/PinnedNotes";
+import { PropagateLoader } from "react-spinners";
+import Api from "../Api/Axios";
+import { useQuery } from "@tanstack/react-query";
+import { PushPin } from "@mui/icons-material";
 interface Note {
   id: string;
   title: string;
@@ -16,17 +14,19 @@ interface Note {
   dateCreated: string;
   lastUpdated: string;
   isDeleted: string;
+  isPrivate: boolean;
+  isPinned: boolean;
 }
 
-const DeletedNotes = () => {
+const PinnedNotesPage = () => {
   const {
     data: notes = [],
     isLoading,
     refetch,
   } = useQuery<Note[]>({
-    queryKey: ["gettingDeletedNotes"],
+    queryKey: ["gettingPinnedNotes"],
     queryFn: async () => {
-      const response = await Api.get("/entries/trash");
+      const response = await Api.get("/entries/pinned");
       return response.data.data;
     },
   });
@@ -64,10 +64,10 @@ const DeletedNotes = () => {
               alignItems={"center"}
             >
               <Typography>
-                <DeleteOutline sx={{ height: "5rem", width: "5rem" }} />
+                <PushPin sx={{ height: "5rem", width: "5rem" }} />
               </Typography>
               <Typography variant="h4" textAlign={"center"}>
-                You do not have deleted notes!
+                You do not have any pinned notes!
               </Typography>
             </Grid>
           </Box>
@@ -80,7 +80,7 @@ const DeletedNotes = () => {
             gap={"1rem"}
           >
             {notes.map((notes: Note, index: number) => (
-              <DeleteNotesUI
+              <PinnedNotes
                 key={notes.id}
                 delay={index}
                 refetch={refetch}
@@ -94,4 +94,4 @@ const DeletedNotes = () => {
   );
 };
 
-export default DeletedNotes;
+export default PinnedNotesPage;

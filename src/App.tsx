@@ -11,6 +11,9 @@ import EditpostPage from "./Pages/EditpostPage";
 import ViewNotes from "./Pages/ViewNotesPage";
 import DeletedNotes from "./Pages/DeletedNotes";
 import UserAccountPage from "./Pages/EditAccountPage";
+import PrivateNotesPage from "./Pages/PrivateNotesPage";
+import PublicNotesPage from "./Pages/PublicNotesPage";
+import PinnedNotesPage from "./Pages/PinnedNotesPage";
 
 const App = () => {
   return (
@@ -26,6 +29,9 @@ const App = () => {
         <Route path="/note/:id" element={<ViewNotes />} />
         <Route path="/deleted-notes" element={<DeletedNotes />} />
         <Route path="/account" element={<UserAccountPage />} />
+        <Route path="/private-notes" element={<PrivateNotesPage />} />
+        <Route path="/public-notes" element={<PublicNotesPage />} />
+        <Route path="/pinned-notes" element={<PinnedNotesPage />} />
       </Routes>
       <ToastContainer position="bottom-right" autoClose={3000} />
     </>

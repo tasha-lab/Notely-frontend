@@ -5,7 +5,9 @@ import {
   FormLabel,
   Grid,
   Stack,
+  Switch,
   TextField,
+  Typography,
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { useState } from "react";
@@ -18,12 +20,15 @@ interface NotesData {
   title: string;
   synopsis: string;
   content: string;
+  isPrivate: boolean;
 }
 
 const WritingNotes = () => {
   const [title, setTitle] = useState("");
   const [synopsis, setSynopsis] = useState("");
   const [content, setContent] = useState("");
+  const [privatenote, setNotePrivate] = useState(false);
+
   const navigate = useNavigate();
 
   const { isPending, mutate } = useMutation({
@@ -49,8 +54,8 @@ const WritingNotes = () => {
       title,
       synopsis,
       content,
+      isPrivate: privatenote,
     };
-
     mutate(noteData);
   };
   return (
@@ -156,7 +161,15 @@ const WritingNotes = () => {
             />
           </FormControl>
         </Grid>
-        <Stack my={"2rem"} direction={"row"} justifyContent={"right"}>
+        <Stack my={"2rem"} direction={"column"} justifyContent={"right"}>
+          <Typography fontSize={"1rem"}>
+            <Switch
+              checked={privatenote}
+              onChange={(e) => setNotePrivate(e.target.checked)}
+              style={{ paddingRight: "1rem" }}
+            />
+            {privatenote ? "private Note" : "public Note"}
+          </Typography>
           <Button
             sx={{ width: "7rem" }}
             variant="contained"

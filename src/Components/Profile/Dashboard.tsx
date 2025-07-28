@@ -22,7 +22,6 @@ import {
   Description,
   Public,
   Lock,
-  Bookmark,
   Logout,
   Person,
 } from "@mui/icons-material";
@@ -119,7 +118,6 @@ const mainItems = [
   { text: "My notes", icon: <Description />, href: "/my-notes" },
   { text: "New Entry", icon: <NoteAdd />, href: "/new-note" },
   { text: "Pinned notes", icon: <PushPin />, href: "/pinned-notes" },
-  { text: "BookMarked", icon: <Bookmark />, href: "/bookmarked-notes" },
   { text: "Public Notes", icon: <Public />, href: "/public-notes" },
   { text: "Private Notes", icon: <Lock />, href: "/private-notes" },
   { text: "Trash", icon: <Delete />, href: "/deleted-notes" },

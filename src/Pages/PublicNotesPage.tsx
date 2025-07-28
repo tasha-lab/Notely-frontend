@@ -1,12 +1,11 @@
+import { Box, Grid, Typography } from "@mui/material";
+import Navigations from "../Components/Common/Navigations";
 import MiniDrawer from "../Components/Profile/Dashboard";
-import DeleteNotesUI from "../Components/Profile/DeletedNotes";
+import PublicNotes from "../Components/Profile/PublicNotes";
+import { PropagateLoader } from "react-spinners";
 import { useQuery } from "@tanstack/react-query";
 import Api from "../Api/Axios";
-import { PropagateLoader } from "react-spinners";
-import { Grid, Typography } from "@mui/material";
-import { Box } from "@mui/material";
-import Navigations from "../Components/Common/Navigations";
-import { DeleteOutline } from "@mui/icons-material";
+import { Public } from "@mui/icons-material";
 
 interface Note {
   id: string;
@@ -16,17 +15,18 @@ interface Note {
   dateCreated: string;
   lastUpdated: string;
   isDeleted: string;
+  isPrivate: boolean;
 }
 
-const DeletedNotes = () => {
+const PublicNotesPage = () => {
   const {
     data: notes = [],
     isLoading,
     refetch,
   } = useQuery<Note[]>({
-    queryKey: ["gettingDeletedNotes"],
+    queryKey: ["gettingPublicNotes"],
     queryFn: async () => {
-      const response = await Api.get("/entries/trash");
+      const response = await Api.get("/entries/public");
       return response.data.data;
     },
   });
@@ -46,7 +46,7 @@ const DeletedNotes = () => {
     );
   }
   return (
-    <>
+    <div>
       <MiniDrawer>
         <Navigations />
         {notes.length === 0 ? (
@@ -64,10 +64,10 @@ const DeletedNotes = () => {
               alignItems={"center"}
             >
               <Typography>
-                <DeleteOutline sx={{ height: "5rem", width: "5rem" }} />
+                <Public sx={{ height: "5rem", width: "5rem" }} />
               </Typography>
               <Typography variant="h4" textAlign={"center"}>
-                You do not have deleted notes!
+                You do not any public notes!
               </Typography>
             </Grid>
           </Box>
@@ -80,7 +80,7 @@ const DeletedNotes = () => {
             gap={"1rem"}
           >
             {notes.map((notes: Note, index: number) => (
-              <DeleteNotesUI
+              <PublicNotes
                 key={notes.id}
                 delay={index}
                 refetch={refetch}
@@ -90,8 +90,8 @@ const DeletedNotes = () => {
           </Grid>
         )}
       </MiniDrawer>
-    </>
+    </div>
   );
 };
 
-export default DeletedNotes;
+export default PublicNotesPage;
