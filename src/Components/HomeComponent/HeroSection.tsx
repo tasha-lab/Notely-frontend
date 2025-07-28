@@ -19,8 +19,7 @@ const HeroSection = () => {
             position: "absolute",
             width: "100%",
             height: "100%",
-            backgroundImage:
-              "url('https://cdn.pixabay.com/photo/2022/06/11/13/47/planner-7256390_1280.jpg')",
+            backgroundImage: "/images/hero-img.avif",
             backgroundSize: "cover",
             backgroundPosition: "center",
             zIndex: 1,
