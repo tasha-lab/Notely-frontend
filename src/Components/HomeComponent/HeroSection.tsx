@@ -1,5 +1,6 @@
 import { ArrowRightAlt } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
@@ -55,7 +56,12 @@ const HeroSection = () => {
           <Typography variant="h2">
             Arrange your notes with Notely today!
           </Typography>
-          <Button variant="contained" sx={{ mt: "2rem" }}>
+          <Button
+            component={Link}
+            to="/new-note"
+            variant="contained"
+            sx={{ mt: "2rem" }}
+          >
             Get Started
             <ArrowRightAlt />
           </Button>
