@@ -7,7 +7,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useAuth } from "../../Store/useAuth";
 
 interface Notes {
   title: string;
