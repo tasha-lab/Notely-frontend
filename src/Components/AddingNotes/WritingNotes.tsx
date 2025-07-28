@@ -181,23 +181,29 @@ const WritingNotes = () => {
               }}
             />
           </FormControl>
-          <Button
-            variant="outlined"
-            onClick={handleSmartRewrite}
-            disabled={isRewriting || !content.trim()}
-            sx={{ textTransform: "none", justifyContent: "center", my: 1 }}
+          <Stack
+            direction={"row"}
+            width={"100%"}
+            justifyContent={"space-between"}
           >
-            {isRewriting ? "Rewriting..." : "✨ Smart Rewrite"}
-          </Button>
-          <Button
-            variant="text"
-            color="secondary"
-            onClick={() => setContent(originalContent)}
-            disabled={!originalContent || content === originalContent}
-            sx={{ textTransform: "none", justifyContent: "center", my: 1 }}
-          >
-            Undo Rewrite
-          </Button>
+            <Button
+              variant="outlined"
+              onClick={handleSmartRewrite}
+              disabled={isRewriting || !content.trim()}
+              sx={{ textTransform: "none", justifyContent: "center", my: 1 }}
+            >
+              {isRewriting ? "Rewriting..." : "✨ Smart Rewrite"}
+            </Button>
+            <Button
+              variant="text"
+              color="secondary"
+              onClick={() => setContent(originalContent)}
+              disabled={!originalContent || content === originalContent}
+              sx={{ textTransform: "none", justifyContent: "center", my: 1 }}
+            >
+              Undo Rewrite
+            </Button>
+          </Stack>
         </Grid>
         <Stack my={"2rem"} direction={"column"} justifyContent={"right"}>
           <Typography fontSize={"1rem"}>
