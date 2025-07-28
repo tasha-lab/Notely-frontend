@@ -28,6 +28,8 @@ const WritingNotes = () => {
   const [synopsis, setSynopsis] = useState("");
   const [content, setContent] = useState("");
   const [privatenote, setNotePrivate] = useState(false);
+  const [originalContent, setOriginalContent] = useState("");
+  const [isRewriting, setIsRewriting] = useState(false);
 
   const navigate = useNavigate();
 
@@ -58,21 +60,21 @@ const WritingNotes = () => {
     };
     mutate(noteData);
   };
-  // const [isRewriting, setIsRewriting] = useState(false); nnn
 
-  // const handleSmartRewrite = async () => {
-  //   try {
-  //     setIsRewriting(true);
-  //     const res = await Api.post("/entries/rewrite", { content });
-  //     setContent(res.data.rewrittenContent); // update editor with AI version
-  //     toast.success("Note rewritten with ✨ AI!");
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("Failed to rewrite note.");
-  //   } finally {
-  //     setIsRewriting(false);
-  //   }
-  // };
+  const handleSmartRewrite = async () => {
+    try {
+      setIsRewriting(true);
+      setOriginalContent(content);
+      const res = await Api.post("/entries/rewrite", { content });
+      setContent(res.data.rewrittenContent);
+      toast.success("Note rewritten with ✨ Gemini AI!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to rewrite note.");
+    } finally {
+      setIsRewriting(false);
+    }
+  };
 
   return (
     <>
@@ -179,14 +181,23 @@ const WritingNotes = () => {
               }}
             />
           </FormControl>
-          {/* <Button
+          <Button
             variant="outlined"
             onClick={handleSmartRewrite}
             disabled={isRewriting || !content.trim()}
-            sx={{ textTransform: "none", justifyContent: "center" }}
+            sx={{ textTransform: "none", justifyContent: "center", my: 1 }}
           >
             {isRewriting ? "Rewriting..." : "✨ Smart Rewrite"}
-          </Button> */}
+          </Button>
+          <Button
+            variant="text"
+            color="secondary"
+            onClick={() => setContent(originalContent)}
+            disabled={!originalContent || content === originalContent}
+            sx={{ textTransform: "none", justifyContent: "center", my: 1 }}
+          >
+            Undo Rewrite
+          </Button>
         </Grid>
         <Stack my={"2rem"} direction={"column"} justifyContent={"right"}>
           <Typography fontSize={"1rem"}>
