@@ -5,7 +5,7 @@ import Api from "../Api/Axios";
 import { Grid } from "@mui/material";
 import { PropagateLoader } from "react-spinners";
 import { Box } from "@mui/material";
-import Navigations from "../Components/Common/Navigations";
+import Navigations from "../Components/Common/PageNavigations";
 
 interface Note {
   id: string;

@@ -5,7 +5,7 @@ import Api from "../Api/Axios";
 import { PropagateLoader } from "react-spinners";
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/material";
-import Navigations from "../Components/Common/Navigations";
+import Navigations from "../Components/Common/PageNavigations";
 import { DeleteOutline } from "@mui/icons-material";
 
 interface Note {

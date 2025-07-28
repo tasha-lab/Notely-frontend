@@ -1,5 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
-import Navigations from "../Components/Common/Navigations";
+import Navigations from "../Components/Common/PageNavigations";
 import MiniDrawer from "../Components/Profile/Dashboard";
 import PinnedNotes from "../Components/Profile/PinnedNotes";
 import { PropagateLoader } from "react-spinners";

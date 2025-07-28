@@ -1,6 +1,6 @@
 import PrivateNotes from "../Components/Profile/PrivateNotes";
 import MiniDrawer from "../Components/Profile/Dashboard";
-import Navigations from "../Components/Common/Navigations";
+import Navigations from "../Components/Common/PageNavigations";
 import { useQuery } from "@tanstack/react-query";
 import Api from "../Api/Axios";
 import { Box, Grid, Typography } from "@mui/material";
