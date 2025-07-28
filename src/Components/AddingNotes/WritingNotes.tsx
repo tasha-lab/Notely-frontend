@@ -58,6 +58,22 @@ const WritingNotes = () => {
     };
     mutate(noteData);
   };
+  const [isRewriting, setIsRewriting] = useState(false);
+
+  // const handleSmartRewrite = async () => {
+  //   try {
+  //     setIsRewriting(true);
+  //     const res = await Api.post("/entries/rewrite", { content });
+  //     setContent(res.data.rewrittenContent); // update editor with AI version
+  //     toast.success("Note rewritten with ✨ AI!");
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Failed to rewrite note.");
+  //   } finally {
+  //     setIsRewriting(false);
+  //   }
+  // };
+
   return (
     <>
       <Box
@@ -128,7 +144,10 @@ const WritingNotes = () => {
           border={"1px solid black"}
           p={"1rem"}
           display={"flex"}
+          flexDirection={"column"}
+          alignItems={"center"}
           justifyContent={"center"}
+          gap={"3rem"}
         >
           <FormControl
             sx={{
@@ -160,6 +179,14 @@ const WritingNotes = () => {
               }}
             />
           </FormControl>
+          {/* <Button
+            variant="outlined"
+            onClick={handleSmartRewrite}
+            disabled={isRewriting || !content.trim()}
+            sx={{ textTransform: "none", justifyContent: "center" }}
+          >
+            {isRewriting ? "Rewriting..." : "✨ Smart Rewrite"}
+          </Button> */}
         </Grid>
         <Stack my={"2rem"} direction={"column"} justifyContent={"right"}>
           <Typography fontSize={"1rem"}>
