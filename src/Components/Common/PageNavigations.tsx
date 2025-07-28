@@ -31,7 +31,11 @@ const Navigations = () => {
             <Typography variant="body1">Back</Typography>
           </Stack>
         </Button>
-        <Link to="/profile" style={{ textDecoration: "none" }}>
+        <Button
+          component={Link}
+          to="/profile"
+          style={{ textDecoration: "none" }}
+        >
           <Stack
             direction={"row"}
             alignItems={"center"}
@@ -41,7 +45,7 @@ const Navigations = () => {
             <KeyboardDoubleArrowRight fontSize="small" />
             <Typography variant="body1">Go to profile</Typography>
           </Stack>
-        </Link>
+        </Button>
       </Box>
     </>
   );
