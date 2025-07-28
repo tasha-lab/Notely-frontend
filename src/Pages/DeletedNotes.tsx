@@ -29,6 +29,7 @@ const DeletedNotes = () => {
       const response = await Api.get("/entries/trash");
       return response.data.data;
     },
+    staleTime: 0,
   });
   if (isLoading) {
     return (

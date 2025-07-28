@@ -23,6 +23,7 @@ const AllNotesPage = () => {
       const response = await Api.get("/entries");
       return response.data.data;
     },
+    staleTime: 0,
   });
   if (isLoading) {
     return (

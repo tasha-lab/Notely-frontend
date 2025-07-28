@@ -28,6 +28,7 @@ const ViewNotes = () => {
       const response = await Api.get(`/entries/${id}`);
       return response.data.data;
     },
+    staleTime: 0,
   });
   if (isLoading) {
     return (

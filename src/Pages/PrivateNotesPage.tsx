@@ -27,6 +27,7 @@ const PrivateNotesPage = () => {
       const response = await Api.get("/entries/private");
       return response.data.data;
     },
+    staleTime: 0,
   });
   if (isLoading) {
     return (

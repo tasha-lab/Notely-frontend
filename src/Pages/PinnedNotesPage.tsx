@@ -29,6 +29,7 @@ const PinnedNotesPage = () => {
       const response = await Api.get("/entries/pinned");
       return response.data.data;
     },
+    staleTime: 0,
   });
   if (isLoading) {
     return (
