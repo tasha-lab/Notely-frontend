@@ -28,7 +28,7 @@ const Navigations = () => {
             sx={{ textDecoration: "none", color: "text.primary" }}
           >
             <KeyboardDoubleArrowLeft fontSize="small" />
-            <Typography variant="body1">Back to home</Typography>
+            <Typography variant="body1">Back</Typography>
           </Stack>
         </Button>
         <Link to="/profile" style={{ textDecoration: "none" }}>
