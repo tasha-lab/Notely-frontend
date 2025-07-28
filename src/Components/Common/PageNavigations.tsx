@@ -32,6 +32,7 @@ const Navigations = () => {
           </Stack>
         </Button>
         <Button
+          variant="outlined"
           component={Link}
           to="/profile"
           style={{ textDecoration: "none" }}
