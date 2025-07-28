@@ -58,7 +58,7 @@ const WritingNotes = () => {
     };
     mutate(noteData);
   };
-  const [isRewriting, setIsRewriting] = useState(false);
+  // const [isRewriting, setIsRewriting] = useState(false);
 
   // const handleSmartRewrite = async () => {
   //   try {
