@@ -7,6 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import ReactMarkdown from "react-markdown";
 
 interface Notes {
   title: string;
@@ -78,7 +79,7 @@ const ViewNote = ({ note }: NoteProps) => {
               fontFamily: `"Roboto", sans-serif`,
             }}
           >
-            {note.content}
+            <ReactMarkdown>{note.content}</ReactMarkdown>
           </Typography>
         </CardContent>
       </Card>
