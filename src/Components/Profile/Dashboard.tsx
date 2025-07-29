@@ -192,6 +192,16 @@ export default function MiniDrawer({ children }: MinidrawerProps) {
                 Home
               </Link>
               <Link
+                to="/new-note"
+                style={{
+                  textDecoration: "none",
+                  color: "#1a1a1a",
+                  fontSize: "1.2rem",
+                }}
+              >
+                Add Note
+              </Link>
+              <Link
                 to="/my-notes"
                 style={{
                   textDecoration: "none",
@@ -200,7 +210,7 @@ export default function MiniDrawer({ children }: MinidrawerProps) {
                   fontFamily: `"Roboto", sans-serif`,
                 }}
               >
-                Notes
+                All Notes
               </Link>
             </Stack>
           </Box>
