@@ -54,16 +54,6 @@ const Navbar = () => {
                     Home
                   </Link>
                   <Link
-                    to="/my-notes"
-                    style={{
-                      textDecoration: "none",
-                      color: "#1a1a1a",
-                      fontSize: "1.2rem",
-                    }}
-                  >
-                    Notes
-                  </Link>
-                  <Link
                     to="/new-note"
                     style={{
                       textDecoration: "none",
@@ -71,7 +61,17 @@ const Navbar = () => {
                       fontSize: "1.2rem",
                     }}
                   >
-                    Add
+                    Add Note
+                  </Link>
+                  <Link
+                    to="/my-notes"
+                    style={{
+                      textDecoration: "none",
+                      color: "#1a1a1a",
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    All Notes
                   </Link>
                 </Stack>
                 <Box>

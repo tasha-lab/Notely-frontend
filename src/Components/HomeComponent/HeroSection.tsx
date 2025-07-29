@@ -1,8 +1,11 @@
 import { ArrowRightAlt } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../Store/useAuth";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const { token } = useAuth();
   return (
     <div>
       <Box
@@ -57,10 +60,11 @@ const HeroSection = () => {
             Arrange your notes with Notely today!
           </Typography>
           <Button
-            component={Link}
-            to="/new-note"
             variant="contained"
             sx={{ mt: "2rem" }}
+            onClick={() => {
+              token ? navigate("/new-note") : navigate("/signup");
+            }}
           >
             Get Started
             <ArrowRightAlt />

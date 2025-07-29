@@ -78,6 +78,7 @@ const Login = () => {
                 variant="filled"
                 label="Enter your current password"
                 required
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

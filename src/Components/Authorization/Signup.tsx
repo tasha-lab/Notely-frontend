@@ -75,6 +75,7 @@ const Signup = () => {
                 variant="filled"
                 label="Enter your Firstname"
                 required
+                type="text"
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
               />
@@ -82,6 +83,7 @@ const Signup = () => {
                 variant="filled"
                 label="Enter your Lastname"
                 required
+                type="text"
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
               />
@@ -89,6 +91,7 @@ const Signup = () => {
                 variant="filled"
                 label="Enter your email"
                 required
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -103,6 +106,7 @@ const Signup = () => {
                 variant="filled"
                 label="Enter your Password"
                 required
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -110,6 +114,7 @@ const Signup = () => {
                 variant="filled"
                 label="Confirm Password"
                 required
+                type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />

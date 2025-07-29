@@ -14,6 +14,7 @@ interface Note {
   content: string;
   dateCreated: string;
   lastUpdated: string;
+  user: { firstname: string; lastname: string; avatar: string };
 }
 
 const AllNotesPage = () => {

@@ -47,11 +47,19 @@ const ViewNote = ({ note }: NoteProps) => {
           </Avatar>
           <Box>
             <Typography variant="subtitle1">
-              {note.user.firstname} {note.user.lastname}{" "}
+              {note.user.firstname} {note.user.lastname}
             </Typography>
-            <Typography variant="caption" color="text.secondary">
-              {new Date(note.dateCreated).toISOString().split("T")[0]}
-            </Typography>
+            <Stack>
+              <Typography variant="caption" color="text.secondary">
+                {new Date(note.dateCreated).toISOString().split("T")[0]}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                {new Date(note.dateCreated).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </Typography>
+            </Stack>
           </Box>
         </Stack>
 

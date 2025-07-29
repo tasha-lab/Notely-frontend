@@ -1,8 +1,10 @@
 import {
+  Avatar,
   Box,
   Button,
   Card,
   CardContent,
+  Divider,
   Grid,
   Stack,
   Typography,
@@ -16,6 +18,7 @@ interface Note {
   content: string;
   dateCreated: string;
   lastUpdated: string;
+  user: { firstname: string; lastname: string; avatar: string };
 }
 
 interface NotesProp {
@@ -24,6 +27,8 @@ interface NotesProp {
 }
 
 const AllNotes = ({ notes }: NotesProp) => {
+  const initials =
+    `${notes.user?.firstname?.[0]}${notes.user?.lastname?.[0]}`.toUpperCase();
   return (
     <>
       <Box width={"16rem"} mt={"2rem"}>
@@ -39,6 +44,26 @@ const AllNotes = ({ notes }: NotesProp) => {
             }}
           >
             <CardContent sx={{ width: "100%" }}>
+              <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                pb={".3rem"}
+              >
+                <Avatar
+                  sx={{
+                    height: "2rem",
+                    width: "2rem",
+                    color: "#000",
+                  }}
+                  src={notes.user?.avatar || undefined}
+                >
+                  {!notes.user?.avatar && initials}
+                </Avatar>
+                <Typography>
+                  {new Date(notes.dateCreated).toISOString().split("T")[0]}
+                </Typography>
+              </Stack>
+              <Divider />
               <Stack>
                 <Typography
                   variant="h4"
