@@ -63,6 +63,16 @@ const Navbar = () => {
                   >
                     Notes
                   </Link>
+                  <Link
+                    to="/new-note"
+                    style={{
+                      textDecoration: "none",
+                      color: "#1a1a1a",
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    Add
+                  </Link>
                 </Stack>
                 <Box>
                   <Link to="/profile" style={{ textDecoration: "none" }}>
