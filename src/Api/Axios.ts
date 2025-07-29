@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const Api = axios.create({
-  baseURL: "https://notely-fullstack.onrender.com/api",
-  // baseURL: "http://localhost:2345/api",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:2345/api"
+      : "https://notely-fullstack.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
