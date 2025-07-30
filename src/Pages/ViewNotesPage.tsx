@@ -5,11 +5,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Api from "../Api/Axios";
 import { PropagateLoader } from "react-spinners";
-import {
-  KeyboardDoubleArrowLeft,
-  KeyboardDoubleArrowRight,
-} from "@mui/icons-material";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import Navigations from "../Components/Common/PageNavigations";
 
 interface Notes {
   title: string;
@@ -46,36 +43,14 @@ const ViewNotes = () => {
   return (
     <div>
       <MiniDrawer>
+        <Navigations />
         <Box
           mt={"5rem"}
           sx={{
             display: "flex",
             justifyContent: "space-between",
           }}
-        >
-          <Stack
-            component="a"
-            href="/"
-            direction={"row"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            sx={{ textDecoration: "none", color: "text.primary" }}
-          >
-            <KeyboardDoubleArrowLeft fontSize="small" />
-            <Typography variant="body1">Back to home</Typography>
-          </Stack>
-          <Stack
-            component="a"
-            href="/profile"
-            direction={"row"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            sx={{ textDecoration: "none", color: "text.primary" }}
-          >
-            <KeyboardDoubleArrowRight fontSize="small" />
-            <Typography variant="body1">Go to profile</Typography>
-          </Stack>
-        </Box>
+        ></Box>
         <Grid>{note && <ViewNote note={note} />}</Grid>
       </MiniDrawer>
     </div>
