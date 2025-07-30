@@ -119,6 +119,7 @@ const PrivateNotes = ({ notes, refetch }: NotesProp) => {
                     bottom: ".5rem",
                     width: "5rem",
                   }}
+                  variant="contained"
                   component={Link}
                   to={`/note/${notes.id}`}
                 >
